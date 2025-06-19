@@ -1,1 +1,217 @@
 # Love
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Feliz Cumpleaños</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: black;
+      overflow: hidden;
+      height: 100%;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: pink;
+      transform: rotate(45deg);
+      animation: fall linear infinite;
+      box-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4;
+      cursor: pointer;
+      z-index: 1;
+    }
+
+    .heart::before, .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: pink;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes fall {
+      0% {
+        top: -10%;
+        opacity: 1;
+        transform: rotate(45deg) scale(1);
+      }
+      100% {
+        top: 110%;
+        opacity: 0;
+        transform: rotate(45deg) scale(1.2);
+      }
+    }
+
+    @keyframes firework {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(4); opacity: 0; }
+    }
+
+    .explosion {
+      position: absolute;
+      border-radius: 50%;
+      width: 10px;
+      height: 10px;
+      background: hotpink;
+      box-shadow: 0 0 10px hotpink;
+      animation: firework 0.6s ease-out forwards;
+      z-index: 2;
+    }
+
+    #title {
+      position: absolute;
+      top: 40%;
+      width: 100%;
+      text-align: center;
+      font-size: 3em;
+      color: #ff69b4;
+      text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4;
+      z-index: 1;
+    }
+
+    #label {
+      position: absolute;
+      bottom: 50px;
+      right: 10px;
+      font-size: 1.2em;
+      color: #ff69b4;
+      text-shadow: 0 0 5px #ff69b4;
+    }
+
+    #counter {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      font-size: 1.2em;
+      color: #ff69b4;
+      text-shadow: 0 0 5px #ff69b4;
+    }
+
+    #envelope {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 40px;
+      height: 30px;
+      background: #ff69b4;
+      border: 2px solid white;
+      border-radius: 4px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ff69b4;
+      z-index: 3;
+    }
+
+    #envelope::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top left, transparent 49%, white 50%, transparent 51%);
+      z-index: 2;
+    }
+
+    #messageBox {
+      position: absolute;
+      top: 60px;
+      left: 20px;
+      width: 90vw;
+      max-width: 600px;
+      padding: 15px;
+      background-color: rgba(255, 182, 193, 0.9);
+      color: black;
+      font-size: 1em;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #ff69b4;
+      display: none;
+      z-index: 4;
+    }
+  </style>
+</head>
+<body>
+  <div id="title">Feliz Cumpleaños</div>
+  <div id="label">Tiempo juntos.</div>
+  <div id="counter"></div>
+  <div id="envelope" title="Haz clic para leer"></div>
+  <div id="messageBox">
+    Hola corazón de melón.<br><br>
+    Quería darte algo especial y vi que esto se hizo popular hace un rato entonces me puse a investigar cómo hacerlo y con ayuda de chat solucioné mis bugs.<br><br>
+    Te amo amorcito, eres mi niña especial y me alegra verte cumplir otro año y me alegra saber que quien estará a tu lado seré yo y eso me hace tan feliz, quiero estar en cada momento especial contigo y eso es porque amo cada parte de ti y cómo eso me hace sentir.<br><br>
+    Amo cuando hablamos, cuando jugamos, cuando comemos, cuando… amo estar solamente a tu lado sin decir nada, solo viéndote y pensando amo tu sonrisa y tu cabello, amo tus manos y tus piernas, amo tus ojos y cada vez que me miran a mí y solo a mí.<br><br>
+    Te amo como jamás he amado y como jamás lo haré porque estoy seguro de que jamás lo necesitaré, siempre serás mi amor indescriptible y yo siempre trataré de ser todo aquello que tú necesites.<br><br>
+    Te amo hoy más que ayer y un poco menos que mañana.<br><br>
+    Por siempre y para siempre tuyo,<br>
+    Yael.
+  </div>
+
+  <script>
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
+      heart.style.top = '-20px';
+
+      heart.addEventListener('click', (e) => {
+        for (let i = 0; i < 10; i++) {
+          const particle = document.createElement('div');
+          particle.className = 'explosion';
+          particle.style.left = (e.clientX + (Math.random() * 40 - 20)) + 'px';
+          particle.style.top = (e.clientY + (Math.random() * 40 - 20)) + 'px';
+          document.body.appendChild(particle);
+          setTimeout(() => particle.remove(), 600);
+        }
+        heart.remove();
+      });
+
+      document.body.appendChild(heart);
+      setTimeout(() => {
+        if (heart.parentNode) heart.remove();
+      }, 5000);
+    }
+
+    setInterval(createHeart, 80);
+
+    const startDate = new Date("November 14, 2020 11:01:00").getTime();
+    const counterElement = document.getElementById("counter");
+
+    function updateCounter() {
+      const now = new Date().getTime();
+      const diff = now - startDate;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+      counterElement.innerText = `${days} días, ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    setInterval(updateCounter, 1000);
+    updateCounter();
+
+    const envelope = document.getElementById("envelope");
+    const messageBox = document.getElementById("messageBox");
+    envelope.addEventListener("click", () => {
+      messageBox.style.display = messageBox.style.display === "none" ? "block" : "none";
+    });
+  </script>
+</body>
+</html>
